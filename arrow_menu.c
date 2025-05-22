@@ -39,6 +39,9 @@
     #define RIGHT_ARROW_KEY 67
 #endif
 
+int get_ch();
+void print_menu(char*[], uint8_t, uint8_t, char*);
+
 int get_ch() {
 #if _WIN32
     return getch;
@@ -52,26 +55,6 @@ int get_ch() {
     system("stty -raw echo");
     return c;
 #endif
-}
-
-void print_menu(char *options[], const uint8_t option_count, const uint8_t position, char *header) {
-
-    ERASE_DISPLAY
-
-    if (header != NULL) {
-        printf("%s", header);
-    }
-
-    printf("\n");
-    for (uint8_t i = 0; i < option_count; i++) {
-
-        if (i == position) {
-            printf("%s > %s%s\n", ANSI_COLOR_CYAN, options[i], ANSI_COLOR_RESET);
-        } else {
-            printf("   %s\n", options[i]);
-        }
-    }
-    printf("\n");
 }
 
 int arrow_menu(char *options[], const uint8_t option_count, char *header, const char *help) {
@@ -122,4 +105,24 @@ int arrow_menu(char *options[], const uint8_t option_count, char *header, const 
     }
     if (pressed_key == 'q' || pressed_key == LEFT_ARROW_KEY) return -1;
     return position;
+}
+
+void print_menu(char *options[], const uint8_t option_count, const uint8_t position, char *header) {
+
+    ERASE_DISPLAY
+
+    if (header != NULL) {
+        printf("%s", header);
+    }
+
+    printf("\n");
+    for (uint8_t i = 0; i < option_count; i++) {
+
+        if (i == position) {
+            printf("%s > %s%s\n", ANSI_COLOR_CYAN, options[i], ANSI_COLOR_RESET);
+        } else {
+            printf("   %s\n", options[i]);
+        }
+    }
+    printf("\n");
 }

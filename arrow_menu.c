@@ -80,8 +80,7 @@ int arrow_menu(char *options[], const uint8_t option_count, char *header, const 
             } else {
                 printf("No help available!\n");
             }
-            printf("\nPress any key to continue...");
-            get_ch();
+            wait_for_user();
             CLEAR_SCREEN
             refresh_screen = true;
         } else {
@@ -125,4 +124,9 @@ void print_menu(char *options[], const uint8_t option_count, const uint8_t posit
         }
     }
     printf("\n");
+}
+
+void wait_for_user() {
+    printf("\nPress any key to continue...");
+    get_ch();
 }

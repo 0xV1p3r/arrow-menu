@@ -42,21 +42,6 @@
 int get_ch();
 void print_menu(char*[], uint8_t, uint8_t, char*);
 
-int get_ch() {
-#if _WIN32
-    return getch;
-#else
-    system("stty raw -echo");
-    int c = getchar();
-    if (c == 27) {
-        getchar();
-        c = getchar();
-    }
-    system("stty -raw echo");
-    return c;
-#endif
-}
-
 int arrow_menu(char *options[], const uint8_t option_count, char *header, const char *help) {
     int pressed_key = 0;
     int position = 0;
@@ -105,6 +90,21 @@ int arrow_menu(char *options[], const uint8_t option_count, char *header, const 
     }
     if (pressed_key == 'q' || pressed_key == LEFT_ARROW_KEY) return -1;
     return position;
+}
+
+int get_ch() {
+#if _WIN32
+    return getch;
+#else
+    system("stty raw -echo");
+    int c = getchar();
+    if (c == 27) {
+        getchar();
+        c = getchar();
+    }
+    system("stty -raw echo");
+    return c;
+#endif
 }
 
 void print_menu(char *options[], const uint8_t option_count, const uint8_t position, char *header) {
